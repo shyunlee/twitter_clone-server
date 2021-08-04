@@ -11,7 +11,7 @@ export const sequelize = new SQ.Sequelize(database, user, password, {
         ssl: {
             require: true,
             rejectUnauthorized: false
-        }
-    }
+        },
+    },
 });
 
