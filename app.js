@@ -31,8 +31,8 @@ app.use((err, req, res, next) => {
 })
 
 sequelize.sync().then(client => {
-    const server = app.listen(process.env.port, () => {
-        console.log(`server is started at ${new Date()} on ${process.env.port}`)
+    const server = app.listen(process.env.PORT, () => {
+        console.log(`server is started at ${new Date()} on ${process.env.PORT}`)
     })
     initSocket(server)
 })
