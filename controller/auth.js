@@ -44,5 +44,5 @@ export const me = async (req, res) => {
 }
 
 function createJwtToken (id) {
-    return jwt.sign({id}, config.jwt.accessSecret, {expiresIn: config.jwt.expiredInDay})
+    return jwt.sign({id}, config.jwt.secret, {expiresIn: config.jwt.expiredInSec})
 }
