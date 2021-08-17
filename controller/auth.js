@@ -36,12 +36,22 @@ export const login = async (req, res) => {
     res.status(401).json({message:'login failed'})
 }
 
+export const logout = async (req, res) => {
+    res.cookie('token', '')
+    res.status(200).json({message:'User has been logged out'})
+}
+
 export const me = async (req, res) => {
     const userFound = await authRepo.findById(req.userId)
     if (!userFound) {
         return res.status(404).json({message: 'User not found'})
     }
     res.status(200).json({username:userFound.username, userId:userFound.id, token:req.token})
+}
+
+export const csrfToken = async (req, res) => {
+    const csrfToken = await generateCSRFToken()
+    res.status(200).json({csrfToken})
 }
 
 function createJwtToken (id) {
@@ -56,4 +66,8 @@ function setToken(res, token) {
         secure: true
     }
     res.cookie('token', token, options)
+}
+
+const generateCSRFToken = async () => {
+    return bcrypt.hash(config.csrf.plainToken, 1)
 }
