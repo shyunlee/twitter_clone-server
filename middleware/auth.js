@@ -3,11 +3,18 @@ import { config } from '../config.js'
 import { findById } from '../data/auth.js'
 
 export async function isAuth (req, res, next) {
+    let token;
     const auth = req.get('Authorization')
-    if (!auth || !auth.startsWith('Bearer ')) {
+    if (auth && auth.startsWith('Bearer ')) {
+        token = auth.split(' ')[1]
+    }
+    if (!token) {
+        token = req.cookies['token']
+    }
+    if (!token) {
         return res.status(404).json({message: 'invalid token'})
     }
-    const token = auth.split(' ')[1]
+    
     jwt.verify(token, config.jwt.secret, async (err, decoded) => {
         if (err) {
             return res.status(401).json({message: 'Authentication Error1'})

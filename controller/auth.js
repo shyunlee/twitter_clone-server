@@ -1,4 +1,3 @@
-import express from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import * as authRepo from '../data/auth.js'
@@ -17,6 +16,7 @@ export const signup = async (req, res) => {
     }
     const userId = await authRepo.createUser(newUserInfo)
     const token = createJwtToken(userId)
+    setToken(res, token)
     res.status(201).json({token, userId, username})
 // }
 }
@@ -29,6 +29,7 @@ export const login = async (req, res) => {
         if (isMatched) {
             const token = createJwtToken(userFound.id)
             const userId = userFound.id
+            setToken(res, token)
             return res.status(200).json({token, userId, username})
         }
     }
@@ -45,4 +46,14 @@ export const me = async (req, res) => {
 
 function createJwtToken (id) {
     return jwt.sign({id}, config.jwt.secret, {expiresIn: config.jwt.expiredInSec})
+}
+
+function setToken(res, token) {
+    const options = {
+        maxAge: config.jwt.expiredInSec * 1000,
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true
+    }
+    res.cookie('token', token, options)
 }
