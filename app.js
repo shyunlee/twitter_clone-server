@@ -27,10 +27,10 @@ app.use(helmet())
 app.use(cors(corsOption))
 app.use(morgan('tiny'))
 app.use(rateLimit)
-app.use(csrfCheck)
 
 app.use('/tweets', tweetsRouter)
 app.use('/auth', authRouter)
+app.use(csrfCheck)
 
 app.use((err, req, res, next) => {
     console.error(err)
