@@ -5,9 +5,11 @@ import morgan from 'morgan'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 import tweetsRouter from './router/tweet.js'
+import { TweetController } from './controller/tweet.js'
+import * as tweetRepository from './data/tweet.js'
 import authRouter from './router/auth.js'
 import { config } from './config.js'
-import { initSocket } from './connection/socket.js'
+import { initSocket, getSocketIO } from './connection/socket.js'
 import { sequelize } from './db/database.js'
 import { csrfCheck } from './middleware/csrf.js'
 import rateLimit from './middleware/rate-limiter.js'
@@ -28,7 +30,7 @@ app.use(cors(corsOption))
 app.use(morgan('tiny'))
 app.use(rateLimit)
 
-app.use('/tweets', tweetsRouter)
+app.use('/tweets', tweetsRouter(new TweetController(tweetRepository, getSocketIO)))
 app.use('/auth', authRouter)
 app.use(csrfCheck)
 
