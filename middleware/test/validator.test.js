@@ -25,7 +25,7 @@ describe('validator middleware', () => {
     const next = jest.fn()
     validator.validationResult = jest.fn(() => ({
       isEmpty: () => false,
-      array: () => 'Error!'
+      array: () => [{msg:'Error!'}]
     }))
 
     validate(request, response, next) 

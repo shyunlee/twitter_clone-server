@@ -10,11 +10,10 @@ const validateCredential = [
     body('username')
         .trim()
         .notEmpty()
-        .isLength({min:3})
         .withMessage('username should be at least 5 characters'),
     body('password')
         .trim()
-        .isLength({min:3})
+        .isLength({min:5})
         .withMessage('password should be at least 5 characters'),
     validate,
 ]

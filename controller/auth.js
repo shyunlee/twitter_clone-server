@@ -7,7 +7,7 @@ export const signup = async (req, res) => {
     const {username, password} = req.body
     const isRegistered = await authRepo.findByUsername(username)
     if (isRegistered) {
-        return res.status(400).json({message:'user already registered'})
+        return res.status(409).json({message:'user already registered'})
     }
     let hashed = await bcrypt.hash(password, config.bcrypt.saltRounds)
     const newUserInfo = {
