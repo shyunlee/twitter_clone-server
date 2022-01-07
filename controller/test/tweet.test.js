@@ -78,7 +78,8 @@ describe("TweetController Test", () => {
         userId: faker.random.alphaNumeric(16)
       }
       request = httpMocks.createRequest({
-        body: newTweet
+        body: newTweet,
+        userId: newTweet.userId
       })
       response = httpMocks.createResponse()
     })

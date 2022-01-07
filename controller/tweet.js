@@ -18,7 +18,7 @@ export class TweetController {
     
  createTweet = async (req, res) => {
         try {
-            const newTweet = await this.tweetRepo.create(req.body)
+            const newTweet = await this.tweetRepo.create({text: req.body.text, userId: req.userId})
             res.status(201).json(newTweet)
             this.getSocket().emit('tweets', {command:'create', data:newTweet})
         } catch (error) {
@@ -45,10 +45,10 @@ export class TweetController {
             const text = req.body.text
             const tweet = await this.tweetRepo.getById(tweetId)
             if (!tweet) {
-                return res.sendStatus(404)
+                return res.status(404).json({message: 'Tweet not found by tweet id'})
             }
             if (tweet.userId !== req.userId) {
-                return res.sendStatus(403)
+                return res.status(403).json({message: 'User not matched for the tweet'})
             }
             const updatedTweet = await this.tweetRepo.update(tweetId, text)
             res.status(200).json(updatedTweet)
