@@ -38,6 +38,7 @@
     "faker": "^5.5.3",
     "jest": "^27.4.5",
     "node-mocks-http": "^1.11.0",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "socket.io-client": "^4.4.1"
   }
 }
