@@ -67,7 +67,6 @@ export async function getByUsername(username) {
 
 export async function create({text, userId} ) {
   return Tweet.create({ text, userId }).then(result => {
-    console.log(result)
     return this.getById(result.id)
   });
 }

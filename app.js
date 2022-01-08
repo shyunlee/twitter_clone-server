@@ -20,7 +20,7 @@ const corsOption = {
   credentials: true,
 };
 
-export const startServer = async () => {
+export const startServer = async (port) => {
   const app = express();
 
   app.use(express.json());
@@ -44,7 +44,7 @@ export const startServer = async () => {
   });
 
   await sequelize.sync()
-  const server = app.listen(process.env.PORT, () => {
+  const server = app.listen(port, () => {
     console.log(`server is started at ${new Date()} on ${process.env.PORT}`);
   });
   initSocket(server);

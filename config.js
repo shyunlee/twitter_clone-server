@@ -36,5 +36,6 @@ export const config = {
     rateLimit:{
         windowMs: 60000,
         maxRequest: 100
-    }
+    },
+    port: Number(process.env.PORT)
 }

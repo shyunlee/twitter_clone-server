@@ -1,3 +1,5 @@
-import { startServer, stopServer } from './app.js'
+import { startServer } from './app.js'
+import { config } from './config.js'
 
-startServer()
+
+startServer(config.port)
